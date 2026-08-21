@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Management | Haripriya Pandi M</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: #eef4f8;
+            color: #1e293b;
+        }
+        /* HEADER */
+        
+        header {
+            background: linear-gradient(135deg, #0f172a, #164e63);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+        
+        header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            font-size: 17px;
+            opacity: 0.9;
+        }
+        
+        .student {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #67e8f9;
+        }
+        /* INTRO */
+        
+        .intro {
+            text-align: center;
+            padding: 35px 20px 20px;
+        }
+        
+        .intro h2 {
+            color: #0f172a;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .intro p {
+            color: #64748b;
+        }
+        /* DISASTER GRID */
+        
+        .disaster-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 25px auto 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        /* CARD */
+        
+        .disaster-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            /* ADDED */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .disaster-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: auto auto 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        
+        .icon svg {
+            width: 45px;
+            height: 45px;
+        }
+        
+        .disaster-card h3 {
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+        /* ADDED - SAME DESCRIPTION HEIGHT */
+        
+        .disaster-card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* UPDATED - SAME BUTTON SIZE AND POSITION */
+        
+        .view-btn {
+            margin-top: auto;
+            width: 132px;
+            height: 32px;
+            border: none;
+            padding: 0;
+            border-radius: 8px;
+            background: #0f766e;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .view-btn:hover {
+            background: #115e59;
+        }
+        /* MODAL */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 18px;
+            padding: 30px;
+            position: relative;
+            animation: popup 0.3s ease;
+        }
+        
+        @keyframes popup {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .close {
+            position: absolute;
+            right: 22px;
+            top: 18px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #64748b;
+        }
+        
+        .modal-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-title h2 {
+            font-size: 30px;
+            color: #0f172a;
+        }
+        
+        .modal-title p {
+            color: #64748b;
+            margin-top: 8px;
+        }
+        /* ABOUT */
+        
+        .about {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        /* DO / DON'T */
+        
+        .safety-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .safety-box {
+            padding: 22px;
+            border-radius: 14px;
+        }
+        
+        .dos {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .donts {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+        
+        .safety-box h3 {
+            margin-bottom: 15px;
+        }
+        
+        .dos h3 {
+            color: #047857;
+        }
+        
+        .donts h3 {
+            color: #dc2626;
+        }
+        
+        .safety-box ul {
+            padding-left: 20px;
+        }
+        
+        .safety-box li {
+            margin-bottom: 11px;
+            line-height: 1.5;
+        }
+        /* FOOTER */
+        
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        footer p {
+            margin: 5px;
+            opacity: 0.85;
+        }
+        /* RESPONSIVE */
+        
+        @media (max-width: 700px) {
+            header h1 {
+                font-size: 28px;
+            }
+            .safety-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <h1>DISASTER MANAGEMENT</h1>
+
+        <p>Be Prepared. Stay Safe. Save Lives.</p>
+
+        <div class="student">
+            HARIPRIYA PANDI M &nbsp; | &nbsp; 23UAD023
+        </div>
+
+    </header>
+
+
+    <!-- INTRO -->
+    <section class="intro">
+
+        <h2>Disaster Safety Information</h2>
+
+        <p>
+            Select a disaster below to learn important safety measures, including what to do and what to avoid.
+        </p>
+
+    </section>
+
+
+    <!-- DISASTER CARDS -->
+    <section class="disaster-container" id="disasterContainer"></section>
+
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeModal()">&times;</span>
+
+            <div class="modal-title">
+
+                <h2 id="modalTitle"></h2>
+
+                <p id="modalSubtitle"></p>
+
+            </div>
+
+
+            <div class="about">
+
+                <strong>About the Disaster</strong>
+
+                <p id="modalAbout"></p>
+
+            </div>
+
+
+            <div class="safety-grid">
+
+                <div class="safety-box dos">
+
+                    <h3>✅ DO's</h3>
+
+                    <ul id="dosList"></ul>
+
+                </div>
+
+
+                <div class="safety-box donts">
+
+                    <h3>❌ DON'Ts</h3>
+
+                    <ul id="dontsList"></ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            <strong>Disaster Management Awareness</strong>
+        </p>
+
+        <p>
+            HARIPRIYA PANDI M | 23UAD023
+        </p>
+
+    </footer>
+
+
+    <script>
+        const disasters = [
+
+            {
+                name: "Flood",
+                subtitle: "Stay alert and move to safer ground.",
+                icon: "🌊",
+
+                about: "A flood occurs when water overflows onto normally dry land due to heavy rainfall, overflowing rivers, storms or drainage problems.",
+
+                dos: [
+                    "Move to higher ground immediately.",
+                    "Follow evacuation instructions from authorities.",
+                    "Switch off electricity and gas if it is safe to do so.",
+                    "Keep drinking water and emergency supplies with you.",
+                    "Carry essential medicines and important documents.",
+                    "Stay updated through official emergency alerts."
+                ],
+
+                donts: [
+                    "Do not walk through fast-moving floodwater.",
+                    "Do not drive through flooded roads.",
+                    "Do not touch electrical equipment while standing in water.",
+                    "Do not drink untreated floodwater.",
+                    "Do not enter damaged buildings.",
+                    "Do not ignore evacuation warnings."
+                ]
+            },
+
+
+            {
+                name: "Earthquake",
+                subtitle: "Drop, Cover and Hold On.",
+                icon: "🌍",
+
+                about: "An earthquake is the sudden shaking of the Earth's surface caused by movement of tectonic plates.",
+
+                dos: [
+                    "Drop to the ground immediately.",
+                    "Take cover under a strong table or desk.",
+                    "Protect your head and neck.",
+                    "Stay away from windows and glass.",
+                    "Move to an open area after the shaking stops.",
+                    "Keep an emergency kit ready."
+                ],
+
+                donts: [
+                    "Do not use elevators during an earthquake.",
+                    "Do not stand near windows.",
+                    "Do not run outside while the ground is shaking.",
+                    "Do not stand under heavy objects.",
+                    "Do not panic.",
+                    "Do not return to damaged buildings."
+                ]
+            },
+
+
+            {
+                name: "Cyclone",
+                subtitle: "Prepare early and stay indoors.",
+                icon: "🌀",
+
+                about: "A cyclone is a powerful rotating storm that develops over warm ocean waters and can bring strong winds, heavy rainfall and storm surges.",
+
+                dos: [
+                    "Monitor official weather warnings.",
+                    "Secure doors and windows.",
+                    "Store enough drinking water and food.",
+                    "Charge mobile phones and emergency devices.",
+                    "Move to a designated shelter if instructed.",
+                    "Keep an emergency kit ready."
+                ],
+
+                donts: [
+                    "Do not go outside during strong winds.",
+                    "Do not stay near windows.",
+                    "Do not travel unnecessarily.",
+                    "Do not touch fallen electrical wires.",
+                    "Do not ignore evacuation orders.",
+                    "Do not spread unverified information."
+                ]
+            },
+
+
+            {
+                name: "Fire",
+                subtitle: "Stay calm and evacuate safely.",
+                icon: "🔥",
+
+                about: "A fire is an uncontrolled burning process that can spread rapidly and cause serious damage to people, property and the environment.",
+
+                dos: [
+                    "Raise the alarm immediately.",
+                    "Evacuate using the nearest safe exit.",
+                    "Stay low if there is smoke.",
+                    "Use a fire extinguisher only if trained.",
+                    "Call the emergency services.",
+                    "Help children and elderly people evacuate."
+                ],
+
+                donts: [
+                    "Do not use elevators during a fire.",
+                    "Do not go back inside for belongings.",
+                    "Do not open doors that feel hot.",
+                    "Do not hide inside rooms or cupboards.",
+                    "Do not use water on electrical fires.",
+                    "Do not panic or push others."
+                ]
+            },
+
+
+            {
+                name: "Tsunami",
+                subtitle: "Move inland and to higher ground.",
+                icon: "🌊",
+
+                about: "A tsunami is a series of large ocean waves usually caused by an undersea earthquake, volcanic eruption or underwater landslide.",
+
+                dos: [
+                    "Move to higher ground immediately.",
+                    "Move inland away from the coastline.",
+                    "Follow official evacuation routes.",
+                    "Listen to emergency warnings.",
+                    "Carry essential emergency supplies.",
+                    "Stay away from beaches after the first wave."
+                ],
+
+                donts: [
+                    "Do not go to the beach to watch the waves.",
+                    "Do not ignore tsunami warnings.",
+                    "Do not return after the first wave.",
+                    "Do not drive through flooded areas.",
+                    "Do not stay near rivers flowing into the sea.",
+                    "Do not spread false information."
+                ]
+            },
+
+
+            {
+                name: "Landslide",
+                subtitle: "Move away from unstable slopes.",
+                icon: "⛰️",
+
+                about: "A landslide occurs when rocks, soil or debris suddenly move down a slope, often due to heavy rainfall, earthquakes or human activity.",
+
+                dos: [
+                    "Move away from the landslide area.",
+                    "Reach stable and higher ground.",
+                    "Listen to local authorities.",
+                    "Report unusual ground movement.",
+                    "Keep an emergency kit ready.",
+                    "Stay alert during heavy rainfall."
+                ],
+
+                donts: [
+                    "Do not approach an active landslide.",
+                    "Do not stand below unstable slopes.",
+                    "Do not cross debris flows.",
+                    "Do not ignore evacuation warnings.",
+                    "Do not enter damaged buildings.",
+                    "Do not return until authorities declare it safe."
+                ]
+            },
+
+
+            {
+                name: "Thunderstorm",
+                subtitle: "Stay indoors during lightning.",
+                icon: "⚡",
+
+                about: "A thunderstorm is a storm accompanied by lightning, thunder, strong winds and sometimes heavy rain or hail.",
+
+                dos: [
+                    "Stay inside a strong building.",
+                    "Keep away from windows.",
+                    "Unplug sensitive electrical devices.",
+                    "Remain indoors until the storm passes.",
+                    "Monitor weather alerts.",
+                    "Seek shelter immediately if lightning is nearby."
+                ],
+
+                donts: [
+                    "Do not stand under isolated trees.",
+                    "Do not use wired electrical appliances.",
+                    "Do not stay in open fields.",
+                    "Do not swim during thunderstorms.",
+                    "Do not touch metal objects unnecessarily.",
+                    "Do not remain near tall structures."
+                ]
+            },
+
+
+            {
+                name: "Heatwave",
+                subtitle: "Stay cool and remain hydrated.",
+                icon: "☀️",
+
+                about: "A heatwave is a prolonged period of unusually high temperatures that can cause dehydration, heat exhaustion and heat stroke.",
+
+                dos: [
+                    "Drink plenty of water.",
+                    "Stay indoors during peak afternoon heat.",
+                    "Wear loose and light-coloured clothing.",
+                    "Use fans or cooling systems when available.",
+                    "Check on elderly people and children.",
+                    "Drink fluids regularly even when not thirsty."
+                ],
+
+                donts: [
+                    "Do not stay in direct sunlight for long periods.",
+                    "Do not consume excessive caffeinated drinks.",
+                    "Do not leave children or pets inside vehicles.",
+                    "Do not perform heavy physical activity during peak heat.",
+                    "Do not ignore signs of heat exhaustion.",
+                    "Do not wait until you are thirsty to drink water."
+                ]
+            },
+
+
+            {
+                name: "Nuclear Emergency",
+                subtitle: "Get inside, stay inside and stay informed.",
+                icon: "☢️",
+
+                about: "A nuclear or radiation emergency involves the accidental or intentional release of radioactive materials that may pose health and environmental risks.",
+
+                dos: [
+                    "Move indoors immediately.",
+                    "Close windows and doors.",
+                    "Follow instructions from authorities.",
+                    "Stay tuned to official emergency information.",
+                    "Remove contaminated outer clothing if instructed.",
+                    "Use stored food and water when advised."
+                ],
+
+                donts: [
+                    "Do not leave shelter without official instructions.",
+                    "Do not touch unknown radioactive materials.",
+                    "Do not consume potentially contaminated food.",
+                    "Do not spread unverified information.",
+                    "Do not stay outdoors unnecessarily.",
+                    "Do not ignore official evacuation instructions."
+                ]
+            },
+
+
+            {
+                name: "Industrial Disaster",
+                subtitle: "Stay away from hazardous areas.",
+                icon: "🏭",
+
+                about: "An industrial disaster is a major accident occurring at an industrial facility that may involve fire, explosions, toxic chemicals or hazardous materials.",
+
+                dos: [
+                    "Move away from the affected area.",
+                    "Follow emergency instructions.",
+                    "Move upwind if a chemical leak is suspected.",
+                    "Cover your nose and mouth when instructed.",
+                    "Evacuate using designated routes.",
+                    "Report the incident to emergency authorities."
+                ],
+
+                donts: [
+                    "Do not enter the affected industrial area.",
+                    "Do not touch spilled chemicals.",
+                    "Do not inhale unknown gases.",
+                    "Do not ignore evacuation orders.",
+                    "Do not use open flames near chemical leaks.",
+                    "Do not spread unverified information."
+                ]
+            }
+
+        ];
+
+
+        const container = document.getElementById("disasterContainer");
+
+
+        /* CREATE DISASTER CARDS */
+
+        disasters.forEach((disaster, index) => {
+
+            const card = document.createElement("div");
+
+            card.className = "disaster-card";
+
+            card.innerHTML = `
+        <div class="icon">
+            <span style="font-size:42px">${disaster.icon}</span>
+        </div>
+
+        <h3>${disaster.name}</h3>
+
+        <p>${disaster.subtitle}</p>
+
+        <button class="view-btn" onclick="openModal(${index})">
+            View Safety Guide
+        </button>
+    `;
+
+            container.appendChild(card);
+        });
+
+
+        /* OPEN MODAL */
+
+        function openModal(index) {
+
+            const disaster = disasters[index];
+
+            document.getElementById("modalTitle").textContent =
+                disaster.icon + " " + disaster.name;
+
+            document.getElementById("modalSubtitle").textContent =
+                disaster.subtitle;
+
+            document.getElementById("modalAbout").textContent =
+                disaster.about;
+
+
+            const dosList = document.getElementById("dosList");
+
+            const dontsList = document.getElementById("dontsList");
+
+            dosList.innerHTML = "";
+
+            dontsList.innerHTML = "";
+
+
+            disaster.dos.forEach(point => {
+
+                const li = document.createElement("li");
+
+                li.textContent = point;
+
+                dosList.appendChild(li);
+
+            });
+
+
+            disaster.donts.forEach(point => {
+
+                const li = document.createElement("li");
+
+                li.textContent = point;
+
+                dontsList.appendChild(li);
+
+            });
+
+
+            document.getElementById("modal").style.display = "flex";
+        }
+
+
+        /* CLOSE MODAL */
+
+        function closeModal() {
+
+            document.getElementById("modal").style.display = "none";
+
+        }
+
+
+        /* CLOSE WHEN CLICKING OUTSIDE */
+
+        window.onclick = function(event) {
+
+            const modal = document.getElementById("modal");
+
+            if (event.target === modal) {
+
+                closeModal();
+
+            }
+
+        };
+    </script>
+
+</body>
+
+</html>
